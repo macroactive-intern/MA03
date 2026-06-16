@@ -83,7 +83,7 @@ Step 7
                 4. Require date format
                         'checked_in_date' => [
                             'required',
-                            'date_format:D-M-Y',
+                            'date_format:Y-M-D',
                             'before_or_equal:today',
                         ]
                 5. Add duplicate check-in validation
