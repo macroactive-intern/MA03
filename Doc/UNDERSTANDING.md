@@ -149,7 +149,7 @@ I will likely implement a small middleware that checks auth()->user()->role === 
 
 What date format should be accepted?
 
-the date format should be "DD/MM/YYYY"
+the date format should be "Yy/mm/dd"
 
 ----------------------------------------------
 
