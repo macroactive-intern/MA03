@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests;
 
-use App\Models\CheckIn;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreCheckInRequest extends FormRequest
@@ -23,25 +24,8 @@ class StoreCheckInRequest extends FormRequest
             'notes' => [
                 'nullable',
                 'string',
-                'max:500',
+                'max:' . config('check_ins.notes_max_length'),
             ],
         ];
-    }
-
-    public function withValidator($validator): void
-    {
-        $validator->after(function ($validator) {
-            $date = $this->input('checked_in_date');
-
-            if ($date && CheckIn::where('user_id', $this->user()->id)
-                ->whereDate('checked_in_date', $date)
-                ->exists()
-            ) {
-                $validator->errors()->add(
-                    'checked_in_date',
-                    'You have already checked in for this date.'
-                );
-            }
-        });
     }
 }

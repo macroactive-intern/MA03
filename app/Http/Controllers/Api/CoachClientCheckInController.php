@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CheckInResource;
 use App\Models\User;
 use App\Services\CheckInStreakService;
 use Illuminate\Http\JsonResponse;
@@ -20,7 +23,7 @@ class CoachClientCheckInController extends Controller
 
         $checkIns = $user->checkIns()
             ->orderByDesc('checked_in_date')
-            ->paginate(15);
+            ->paginate(config('check_ins.history_per_page'));
 
         return response()->json([
             'client' => [
@@ -28,12 +31,8 @@ class CoachClientCheckInController extends Controller
                 'name'  => $user->name,
                 'email' => $user->email,
             ],
-            'check_ins' => $checkIns->map(fn ($c) => [
-                'id'              => $c->id,
-                'checked_in_date' => $c->checked_in_date->toDateString(),
-                'notes'           => $c->notes,
-            ]),
-            'meta' => [
+            'check_ins' => CheckInResource::collection($checkIns),
+            'meta'      => [
                 'current_page' => $checkIns->currentPage(),
                 'per_page'     => $checkIns->perPage(),
                 'total'        => $checkIns->total(),

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
 use App\Models\User;
@@ -16,7 +18,7 @@ class CheckInStreakService
             return 0;
         }
 
-        $today = Carbon::today()->toDateString();
+        $today     = Carbon::today()->toDateString();
         $yesterday = Carbon::yesterday()->toDateString();
 
         if ($dates->contains($today)) {
@@ -27,7 +29,7 @@ class CheckInStreakService
             return 0;
         }
 
-        $streak = 0;
+        $streak  = 0;
         $current = $start->copy();
 
         while ($dates->contains($current->toDateString())) {
