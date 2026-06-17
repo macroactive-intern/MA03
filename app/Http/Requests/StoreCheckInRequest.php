@@ -34,7 +34,7 @@ class StoreCheckInRequest extends FormRequest
             $date = $this->input('checked_in_date');
 
             if ($date && CheckIn::where('user_id', $this->user()->id)
-                ->where('checked_in_date', $date)
+                ->whereDate('checked_in_date', $date)
                 ->exists()
             ) {
                 $validator->errors()->add(

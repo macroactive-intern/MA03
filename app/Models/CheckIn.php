@@ -19,7 +19,7 @@ class CheckIn extends Model
     protected function casts(): array
     {
         return [
-            'checked_in_date' => 'date',
+            'checked_in_date' => 'date:Y-m-d',
         ];
     }
 
